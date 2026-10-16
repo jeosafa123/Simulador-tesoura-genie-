@@ -1,0 +1,7 @@
+Simulador Genie GS (GS-2046, GS-2646, GS-3246, GS-3232)
+Baseado nos manuais de serviço 97385PB e de peças 1267431GT.
+Abra index.html no navegador (arquivos ao lado: style.css, script.js e a pasta img com as páginas dos esquemas).
+Ou use genie-gs-simulador.html, que é o arquivo único.
+Novidades: tesoura com 3, 4 e 5 níveis conforme o manual de peças, cesto com guarda-corpo de 3 corrimões, extensão do piso (0,91 m) e portinhola, chassi com portas, para-lamas e nariz, rodas com cubo e porca castelo, braço de segurança e tubos transversais.
+GS-2046: dados de altura, carga e tempos vêm de ficha técnica pública do fabricante; os esquemas do manual de serviço cobrem GS-2646 e GS-3246.
+Preferências ficam no localStorage (chave gs-sim-v1).

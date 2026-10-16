@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Simulador Genie GS</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#stage">Ir para o modelo 3D</a>
+<div class="app" id="app" data-model="3246">
+<header class="top" role="banner">
+  <div class="brand"><b id="brandN">Genie GS-3246</b><small>Simulador técnico · baseado nos manuais de serviço 97385PB e de peças 1267431GT</small></div>
+  <div class="chips" role="group" aria-label="Modelo"><span class="lb">Modelo</span><button class="chip" data-model="3246" aria-pressed="true">GS-3246</button><button class="chip" data-model="2046" aria-pressed="false">GS-2046</button><button class="chip" data-model="2646" aria-pressed="false">GS-2646</button><button class="chip" data-model="3232" aria-pressed="false">GS-3232</button></div>
+  <div class="chips" role="group" aria-label="Camadas">
+    <span class="lb">Camada</span>
+    <button class="chip" data-mode="all" aria-pressed="true">Tudo</button>
+    <button class="chip h" data-mode="hyd" aria-pressed="false">Hidráulico</button>
+    <button class="chip e" data-mode="ele" aria-pressed="false">Elétrico</button>
+    <button class="chip" data-mode="mec" aria-pressed="false">Estrutura</button>
+  </div>
+  <div class="chips" role="group" aria-label="Carcaça">
+    <span class="lb">Carcaça</span>
+    <button class="chip" data-shell="0.5" aria-pressed="false">Sólida</button>
+    <button class="chip" data-shell="0.16" aria-pressed="true">Raio-X</button>
+    <button class="chip" data-shell="0" aria-pressed="false">Oculta</button>
+    <button class="chip" id="pinsBtn" aria-pressed="true">Rótulos</button>
+  </div>
+  <div class="chips" role="group" aria-label="Preferências e painéis">
+    <span class="lb">Interface</span>
+    <button class="chip" id="sndBtn" aria-pressed="false" aria-label="Som desligado. Ativar som">♪ Som: desl.</button>
+    <button class="chip" id="ctlBtn" aria-pressed="true" aria-controls="ctl">Controles</button>
+    <button class="chip" id="sideBtn" aria-pressed="true" aria-controls="side">Painel técnico</button>
+  </div>
+  <div class="chips" role="group" aria-label="Câmera">
+    <span class="lb">Vista</span>
+    <button class="chip" data-view="iso">Isométrica</button>
+    <button class="chip" data-view="side">Lateral</button>
+    <button class="chip" data-view="top">Topo</button>
+    <button class="chip" data-view="front">Frente</button>
+  </div>
+</header>
+
+<aside class="ctl" id="ctl" aria-label="Operação da máquina">
+  <div class="grp"><h3>Chave de comando KS1</h3>
+    <div class="seg" id="keySeg" role="group" aria-label="Chave de comando KS1"><button data-k="off" aria-pressed="true">Desl.</button><button data-k="ground" aria-pressed="false">Solo</button><button data-k="platform" aria-pressed="false">Plataforma</button></div></div>
+  <div class="grp"><h3>Segurança</h3>
+    <div class="row"><button class="btn estop" id="estop" aria-pressed="false">Parada de emergência</button></div>
+    <div class="row" style="margin-top:8px"><button class="btn" id="qd1" aria-pressed="true">Bateria conectada (QD1)</button></div></div>
+  <div class="grp"><h3>Controles da plataforma</h3>
+    <div class="seg" id="modeSeg" role="group" aria-label="Modo da plataforma"><button data-m="lift" aria-pressed="true">Elevação</button><button data-m="drive" aria-pressed="false">Movimento</button></div>
+    <div class="row" style="margin-top:8px"><button class="btn" id="torque" aria-pressed="false">Torque alto (BN6)</button></div></div>
+  <div class="grp"><h3>Joystick e direção</h3>
+    <div class="pad">
+      <span></span><button id="bUp" data-hold="up" aria-pressed="false" aria-label="Joystick para frente (segure)">▲</button><span></span>
+      <button id="bLeft" data-hold="left" aria-pressed="false" aria-label="Direção à esquerda (segure)">◀</button><button id="bDown" data-hold="down" aria-pressed="false" aria-label="Joystick para trás (segure)">▼</button><button id="bRight" data-hold="right" aria-pressed="false" aria-label="Direção à direita (segure)">▶</button>
+      <div class="cap" id="padCap" role="status">Segure o botão. Teclado: setas.</div>
+    </div></div>
+  <div class="grp o32w"><h3>Estabilizadores (GS-3232)</h3>
+    <div class="pad3"><button id="oEn" data-hold="oen" aria-pressed="false">Habilitar</button><button id="oEx" data-hold="oex" aria-pressed="false">Estender</button><button id="oRe" data-hold="ore" aria-pressed="false">Retrair</button></div>
+    <p class="note" id="oCap">Segure Habilitar e Estender. A máquina estende e nivela sozinha.</p>
+    <label class="note" for="roll">Declive lateral do terreno: <b id="rollV">0°</b></label><input type="range" id="roll" min="-6" max="6" step="0.5" value="0">
+    <label class="note" for="pitch">Declive frente/trás: <b id="pitchV">0°</b></label><input type="range" id="pitch" min="-4" max="4" step="0.5" value="0">
+    <p class="note">Limite de nivelamento no manual: 5° lateral e 3° frente/trás.</p></div>
+  <div class="grp"><h3>Cesto</h3><div class="row"><button class="btn" id="btnExt" aria-pressed="false">Extensão do piso</button><button class="btn" id="btnGate" aria-pressed="false">Portinhola</button></div><p class="note">Extensão: 0,91 m no GS-2046 (manual de peças 401.1).</p></div>
+  <div class="grp"><h3>Posição da tesoura</h3>
+    <input type="range" id="uRange" min="0" max="100" value="0" aria-label="Elevação da plataforma">
+    <div class="row" style="margin-top:8px"><span class="note" style="width:100%">Tempo de simulação</span></div>
+    <div class="seg" id="spdSeg" role="group" aria-label="Velocidade da simulação"><button data-s="1" aria-pressed="false">×1</button><button data-s="5" aria-pressed="true">×5</button><button data-s="10" aria-pressed="false">×10</button></div>
+    <p class="note" id="timeNote"></p></div>
+  <div class="grp"><h3>Indicadores</h3><div class="lamps" id="lamps" role="list" aria-label="Indicadores da máquina"></div></div>
+</aside>
+
+<main class="stage" id="stage" role="group" tabindex="0" aria-label="Modelo 3D interativo da máquina" aria-describedby="stageHelp">
+  <p class="sr-only" id="stageHelp">Arraste para girar, role ou use a pinça para aproximar. Com o foco aqui: Shift mais setas gira, mais e menos aproximam, zero recentraliza. Para escolher peças pelo teclado use a aba Lista.</p>
+  <div id="world" aria-hidden="true"></div>
+  <div class="tmode touch-only" id="tmodeSeg" role="group" aria-label="Modo de toque"><button data-tm="camera" aria-pressed="true">📷 Modo Câmera</button><button data-tm="operation" aria-pressed="false">🕹 Modo Operação</button></div>
+  <div class="opad touch-only" id="opad" role="group" aria-label="Controles de operação na tela">
+    <div class="opad-main"><button data-hold="up" aria-pressed="false" aria-label="Para frente ou subir (segure)">▲</button><button data-hold="left" aria-pressed="false" aria-label="Esquerda (segure)">◀</button><button data-hold="down" aria-pressed="false" aria-label="Para trás ou descer (segure)">▼</button><button data-hold="right" aria-pressed="false" aria-label="Direita (segure)">▶</button></div>
+    <div class="opad-out o32w"><button data-hold="oen" aria-pressed="false">Hab.</button><button data-hold="oex" aria-pressed="false">Est.</button><button data-hold="ore" aria-pressed="false">Ret.</button></div>
+  </div>
+  <div class="diag" id="diag" role="status" aria-label="Display de diagnóstico G8"><small>G8 DIAG</small><span id="diagTx">--</span></div>
+  <div class="hud" id="hud" aria-hidden="true">
+    <div class="box"><div class="k">Elevação</div><div class="v"><span id="hUp">0</span><small> %</small></div><div class="bar"><i id="hUpB"></i></div></div>
+    <div class="box"><div class="k">Pressão (ilustrativa)</div><div class="v"><span id="hP">0</span><small> bar</small></div><div class="bar"><i id="hPB" style="background:var(--hyd)"></i></div></div>
+    <div class="box"><div class="k">Bateria</div><div class="v"><span id="hV">0.0</span><small> V</small></div></div>
+    <div class="box"><div class="k">Velocidade</div><div class="v"><span id="hSp">0.0</span><small> km/h</small></div></div>
+  </div>
+  <div class="tools"><button id="zIn" aria-label="Aproximar">+</button><button id="zOut" aria-label="Afastar">−</button><button id="zReset" aria-label="Recentralizar a vista">⌖</button></div>
+</main>
+
+<aside class="side" id="side" aria-label="Painel técnico">
+  <div class="tabs" role="tablist" aria-label="Painel técnico">
+    <button role="tab" id="tab-info" aria-controls="p-info" aria-selected="true" tabindex="0" data-t="info">Peça</button>
+    <button role="tab" id="tab-live" aria-controls="p-live" aria-selected="false" tabindex="-1" data-t="live">Sistema</button>
+    <button role="tab" id="tab-list" aria-controls="p-list" aria-selected="false" tabindex="-1" data-t="list">Lista</button>
+    <button role="tab" id="tab-fault" aria-controls="p-fault" aria-selected="false" tabindex="-1" data-t="fault">Falhas</button>
+    <button role="tab" id="tab-doc" aria-controls="p-doc" aria-selected="false" tabindex="-1" data-t="doc">Esquemas</button>
+  </div>
+  <section class="pane act" id="p-info" role="tabpanel" aria-labelledby="tab-info" tabindex="0"></section>
+  <section class="pane" id="p-live" role="tabpanel" aria-labelledby="tab-live" tabindex="0" hidden>
+    <h2>Estado do sistema</h2>
+    <h4>Saídas do ECM (U5)</h4><div class="outs" id="outs"></div>
+    <h4>Caminho do óleo agora</h4><p id="hydTxt" class="note" style="color:var(--fg)"></p>
+    <h4>Caminho elétrico agora</h4><p id="eleTxt" class="note" style="color:var(--fg)"></p>
+    <h4>Limites do manual</h4>
+    <table class="sp"><tr><td>Válvula de segurança do sistema (AB)</td><td class="m">255 bar máx.</td></tr><tr><td>Segurança de elevação (AJ)</td><td class="m">124 a 241 bar</td></tr><tr><td>Segurança da direção (AH)</td><td class="m">103 bar</td></tr><tr><td>Comando do freio (AF)</td><td class="m">3,4 bar</td></tr><tr><td>Bomba</td><td class="m">15 L/min a 172 bar</td></tr></table>
+    <p class="src">Os valores de pressão exibidos no simulador são ilustrativos. Os limites acima vêm do manual.</p>
+  </section>
+  <section class="pane" id="p-list" role="tabpanel" aria-labelledby="tab-list" tabindex="0" hidden><input class="srch" id="srch" type="search" placeholder="Buscar peça ou código (ex.: Y8, tanque, ECM)" aria-label="Buscar peça"><div class="plist" id="plist" role="list"></div></section>
+  <section class="pane" id="p-fault" role="tabpanel" aria-labelledby="tab-fault" tabindex="0" hidden>
+    <h2>Códigos de falha</h2>
+    <p class="note">Toque num código para simular a falha. A peça suspeita pisca em vermelho e o display G8 mostra o código. Textos da tabela da Seção 5 do manual.</p>
+    <div id="faults" role="list"></div>
+    <div class="row"><button class="btn" id="clrFault">Limpar falha</button></div>
+  </section>
+  <section class="pane" id="p-doc" role="tabpanel" aria-labelledby="tab-doc" tabindex="0" hidden>
+    <h2>Esquemas originais</h2>
+    <p class="note">Páginas do manual 97385PB, com as versões por faixa de número de série. Digite o número de série da máquina para achar o esquema dela.</p>
+    <div class="row"><input class="srch" id="serial" autocomplete="off" placeholder="Série, ex.: GS4607-83000" style="margin:0;flex:1" aria-label="Número de série"><button class="chip" id="serialGo">Buscar</button></div>
+    <p class="note" id="serialMsg" role="status"></p><div class="sch" id="schList"></div>
+  </section>
+</aside>
+</div>
+<div class="sr-only" id="sr" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle" hidden>
+  <div class="mb"><span id="mTitle"></span><span class="msel" id="mSel" role="status"></span><button class="chip" id="mGo" hidden>Ver no 3D</button><button class="chip" id="mZ1">Ajustar</button><button class="chip" id="mZ2">Ampliar</button><button class="chip" id="mZ3">Máximo</button><button class="chip" id="mX">Fechar</button></div>
+  <div class="mi" id="mI" tabindex="-1"></div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
